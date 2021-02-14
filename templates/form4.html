@@ -1,0 +1,25 @@
+<!-- Student name: Chiyu He (Finn) ;   Student ID: 1147535 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site(form).css')}}" />
+    <title>Add activity information</title>
+</head>
+<body>
+    <h1>Add activity information</h1>
+    
+        <form action = "/addactivity" method = "POST">
+        
+        <label for = "groupid">Group ID:</label>
+        <input type = "text" id = "groupid" name = "groupid" /> <br/>
+        <label for = "nighttitle">Night Title:</label>
+        <input type = "text" id = "nighttitle" name = "nighttitle" /> <br/>
+        <label for = "description">Description:</label>
+        <input type = "text" id = "description" name = "description" /> <br/>
+        <label for = "activitynightdate">Activitynight Date:</label>
+        <input type = "text" id = "activitynightdate" name = "activitynightdate" /> <br/>
+        <input type = "submit"/>
+        <input type = "reset"/>
+    </form>
+</body>
+</html>
