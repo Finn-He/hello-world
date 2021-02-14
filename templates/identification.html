@@ -1,0 +1,20 @@
+<!-- Student name: Chiyu He (Finn) ;   Student ID: 1147535 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site(form).css')}}" /> 
+    <title>Identification information</title>
+</head>
+<body>
+    <h1>Identification</h1>
+        <form action = "/adult" method = "POST"> 
+
+        <label for = "memberid">Member ID:</label>
+        <input type = "text" id = "memberid" name = "memberid" /> <br/>
+        <label for = "firstname">first name:</label>
+        <input type = "text" id = "firstname" name = "firstname" /> <br/>
+        <input type = "submit"/>
+        <input type = "reset"/>
+    </form>
+</body>
+</html>
