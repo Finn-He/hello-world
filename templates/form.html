@@ -1,0 +1,32 @@
+<!-- Student name: Chiyu He (Finn) ;   Student ID: 1147535 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site(form).css')}}" />
+    <title>Young update information</title>
+</head>
+<body type = "text/css">
+    <h1>Young update information</h1>
+    {% if memberdetails %}
+     {{memberdetails[0]}}<br/>
+    {% endif %}
+    {% if memberdetails %}
+        <form action = "/statussituation/update" method = "POST"> 
+    {% endif %}
+
+        <label for = "memberid">Member ID:</label>
+        <input type = "text" id = "memberid" name = "memberid" {% if memberdetails %} value="{{memberdetails[1]}}" {% endif %}/> <br/>
+        <label for = "firstname">first name:</label>
+        <input type = "text" id = "firstname" name = "firstname" {% if memberdetails %} value="{{memberdetails[2]}}" {% endif %}/> <br/>
+        <label for = "attendancestatus">Attendance Status:</label>
+        <input name="attendancestatus" id="attendancestatus" list="attendancestatusoption" {% if memberdetails %} value="{{memberdetails[3]}}" {% endif %}/>
+            <datalist id="attendancestatusoption">
+                <option value="Present"></option>
+                <option value="Notified Absence"></option>
+                <option value="Not Present"></option>				
+            </datalist>
+        <input type = "submit"/>
+        <input type = "reset"/>
+    </form>
+</body>
+</html>
