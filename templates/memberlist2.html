@@ -1,0 +1,34 @@
+<!-- Student name: Chiyu He (Finn) ;   Student ID: 1147535 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> 
+    <title>Member List</title>
+</head>
+<body>
+    <h1>Member list</h1>
+    <table class="table table-dark table-hover">
+        <thead>
+        <tr>
+        {% for col in dbcols %}
+        <th>{{col}}</th>
+        {% endfor %}
+        </tr>
+        </thead>
+    {# this is a comment the line below prints the db result #}
+    <tbody>
+        
+    {% for result in dbresult %}
+    <tr>
+        <td><a href= "/statussituation2/update2?memberid={{result[0]}}">{{result[0]}}</a></td><td>{{result[1]}}</td><td>{{result[2]}}</td><td>{{result[3]}}</td><td>{{result[4]}}</td><td>{{result[5]}}</td><td>{{result[6]}}</td><td>{{result[7]}}</td><td>{{result[8]}}</td><td>{{result[9]}}</td><td>{{result[10]}}</td>
+    </tr>    
+    {% endfor %}
+    
+         
+    
+
+    </tbody>
+    </table>
+    <a href= "/addstatus"><input type=button value= "add more" > </a>  
+</body>
+</html>
