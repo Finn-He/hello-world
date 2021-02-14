@@ -1,0 +1,25 @@
+<!-- Student name: Chiyu He (Finn) ;   Student ID: 1147535 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site(adult).css')}}" />
+    </head>
+
+    <body>
+        <div class="navbar">
+            <a href="{{ url_for('basicinformation') }}" class="navbar-brand">Basic Information</a><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <a href="{{ url_for('activityinformation') }}" class="navbar-brand">Activity Information</a>
+        </div>
+
+        <div class="body-content">
+            {% block content %}
+            {% endblock %}
+            <hr/>
+            <footer>
+                <p>© 2021</p>
+            </footer>
+        </div>
+    </body>
+</html>
