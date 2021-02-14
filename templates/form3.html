@@ -1,0 +1,36 @@
+<!-- Student name: Chiyu He (Finn) ;   Student ID: 1147535 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site(form).css')}}" /> 
+    <title>Add information</title>
+</head>
+<body>
+    <h1>Add information</h1>
+    {% if memberdetails %}
+      {{memberdetails}}<br/>
+      {{memberdetails[0]}}<br/>
+    {% endif %}
+    
+        <form action = "/addstatus" method = "POST">
+        
+        <label for = "groupid">Group ID:</label>
+        <input type = "text" id = "groupid" name = "groupid" /> <br/>
+        <label for = "firstname">First Name:</label>
+        <input type = "text" id = "firstname" name = "firstname" /> <br/>
+        <label for = "leftdate">Left Date:</label>
+        <input type = "text" id = "leftdate" name = "leftdate" /> <br/>
+        <label for = "attendancestatus">Attendance Status:</label>
+        <input name="attendancestatus" id="attendancestatus" list="attendancestatusoption"/><br/>
+            <datalist id="attendancestatusoption">
+                <option value="Present"></option>
+                <option value="Notified Absence"></option>
+                <option value="Not Present"></option>				
+            </datalist>
+        <label for = "notes">Notes:</label>
+        <input type = "text" id = "notes" name = "notes" /> <br/>
+        <input type = "submit"/>
+        <input type = "reset"/>
+    </form>
+</body>
+</html>
