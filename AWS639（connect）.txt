@@ -1,0 +1,32 @@
+Hey team! Database is set up
+
+endpoint: comp639.cldqh6d4e9ir.us-east-1.rds.amazonaws.com
+
+port: 5432
+
+username: postgres
+
+password: comp639!
+
+
+please use this for URL: jdbc:postgresql://comp639.cldqh6d4e9ir.us-east-1.rds.amazonaws.com:5432/comp639
+
+
+Gra.Cam@gmail.com
+Vaz=8G
+
+domperrier@gmail.com
+*jRB6f
+
+Oli.Jessica@gmail.com
+8_Qj@B
+
+
+
+
+
+
+<script src="/static/js/echarts.min.js"></script>
+
+
+

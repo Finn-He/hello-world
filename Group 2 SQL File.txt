@@ -1,0 +1,1689 @@
+---
+--- drop tables
+---
+
+DROP TABLE IF EXISTS authorisation CASCADE;
+
+DROP TABLE IF EXISTS member CASCADE;
+DROP TABLE IF EXISTS membership CASCADE;
+DROP TABLE IF EXISTS membership_type CASCADE;
+DROP TABLE IF EXISTS membership_payment CASCADE;
+DROP TABLE IF EXISTS pt_payment CASCADE;
+DROP TABLE IF EXISTS pt_booking CASCADE;
+DROP TABLE IF EXISTS pt_class CASCADE;
+DROP TABLE IF EXISTS attendance CASCADE;
+DROP TABLE IF EXISTS group_booking CASCADE;
+DROP TABLE IF EXISTS trainer CASCADE;
+DROP TABLE IF EXISTS group_class CASCADE;
+DROP TABLE IF EXISTS authorisation CASCADE;
+DROP TABLE IF EXISTS manager CASCADE;
+DROP TABLE IF EXISTS communication CASCADE;
+DROP TABLE IF EXISTS pt_refund CASCADE;
+
+
+--
+-- Name: authorisation; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE authorisation (
+    user_id SERIAL PRIMARY KEY,
+    password varchar(10),
+    user_type varchar(15)
+);
+
+--
+-- Data for Name: authorisation; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO authorisation VALUES ('10000', 'Vaz=8G', 'manager');
+INSERT INTO authorisation VALUES ('10100', '?2ANha', 'trainer');
+INSERT INTO authorisation VALUES ('10101', '7$Un$@', 'trainer');
+INSERT INTO authorisation VALUES ('10102', 'rDf@52', 'trainer');
+INSERT INTO authorisation VALUES ('10103', 'N_h2Kn', 'trainer');
+INSERT INTO authorisation VALUES ('10104', '8_Qj@B', 'trainer');
+INSERT INTO authorisation VALUES ('11000', '2D*wE@', 'member');
+INSERT INTO authorisation VALUES ('11001', '2AYa%7', 'member');
+INSERT INTO authorisation VALUES ('11002', 'q_wV7-', 'member');
+INSERT INTO authorisation VALUES ('11003', '*jRB6f', 'member');
+INSERT INTO authorisation VALUES ('11004', 'uH2Y&q', 'member');
+INSERT INTO authorisation VALUES ('11005', '?Jq9eK', 'member');
+INSERT INTO authorisation VALUES ('11006', 'J8rQ!u', 'member');
+INSERT INTO authorisation VALUES ('11007', 'a_5?J_', 'member');
+INSERT INTO authorisation VALUES ('11008', '3amF!t', 'member');
+INSERT INTO authorisation VALUES ('11009', '_S8g8D', 'member');
+INSERT INTO authorisation VALUES ('11010', '2D*wE@', 'member');
+INSERT INTO authorisation VALUES ('11011', '2AYa%7', 'member');
+INSERT INTO authorisation VALUES ('11012', 'q_wV7-', 'member');
+INSERT INTO authorisation VALUES ('11013', '*jRB6f', 'member');
+INSERT INTO authorisation VALUES ('11014', 'uH2Y&q', 'member');
+INSERT INTO authorisation VALUES ('11015', '?Jq9eK', 'member');
+INSERT INTO authorisation VALUES ('11016', 'J8rQ!u', 'member');
+INSERT INTO authorisation VALUES ('11017', 'a_5?J_', 'member');
+INSERT INTO authorisation VALUES ('11018', '3amF!t', 'member');
+INSERT INTO authorisation VALUES ('11019', '_S8g8D', 'member');
+INSERT INTO authorisation VALUES ('11020', '2D*wE@', 'member');
+INSERT INTO authorisation VALUES ('11021', '2AYa%7', 'member');
+INSERT INTO authorisation VALUES ('11022', 'q_wV7-', 'member');
+INSERT INTO authorisation VALUES ('11023', '*jRB6f', 'member');
+INSERT INTO authorisation VALUES ('11024', 'uH2Y&q', 'member');
+INSERT INTO authorisation VALUES ('11025', '?Jq9eK', 'member');
+INSERT INTO authorisation VALUES ('11026', 'J8rQ!u', 'member');
+INSERT INTO authorisation VALUES ('11027', 'a_5?J_', 'member');
+INSERT INTO authorisation VALUES ('11028', '3amF!t', 'member');
+INSERT INTO authorisation VALUES ('11029', '_S8g8D', 'member');
+INSERT INTO authorisation VALUES ('11030', '*jRB6f', 'member');
+
+--
+-- Name: member; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE member
+(
+   user_id        integer        NOT NULL,
+   first_name     varchar(30)    NOT NULL,
+   last_name      varchar(30),
+   phone_number   varchar(24),
+   email_address  varchar(60),
+   address        varchar(60),
+   date_of_birth  date,
+   gender         varchar(10),
+   goals          text,
+   medical_notes  text,
+   photo_url      varchar(255)
+);
+
+ALTER TABLE member
+  ADD CONSTRAINT member_user_id_fkey FOREIGN KEY (user_id)
+  REFERENCES authorisation (user_id) 
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE member
+   ADD CONSTRAINT memberid UNIQUE (user_id);
+
+
+--
+-- Data for Name: member; Type: TABLE DATA; Schema: public; Owner: -
+--
+INSERT INTO member VALUES ('11000', 'Jose', 'Pavarotti', '021 555 8097', 'josepavarotti@gmail.com', '45  Eastwood Rise', '1970-03-28', 'Male', 'Build muscles', 'N/A', ' NULL');
+INSERT INTO member VALUES ('11001', 'Hari', 'Kumar', '022 555 1717', 'harikumar@gmail.com', '74  Blackburn Place', '1974-12-07', 'Male', 'Decrease Body Fat', 'High cholesterol',  'NULL');
+INSERT INTO member VALUES ('11002', 'Jytte', 'Petersen', '021 549 8796', 'jyttepetersen@gmail.com', '153  Sinclair Street', '1980-08-14', 'Female', 'Toning', 'Asthma', 'NULL');
+INSERT INTO member VALUES ('11003', 'Dominique', 'Perrier', '027 546 7851', 'domperrier@gmail.com', '115  McDowell Street', '1981-02-07', 'Male', 'Build More Lean Muscle', 'High cholesterol', 'NULL');
+INSERT INTO member VALUES ('11004', 'Art', 'Braunschweiger', '022 486 6442', 'artb@gmail.com', '?51  Gurney Road', '1981-04-30', 'Male', 'Build muscles', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11005', 'Pascale', 'Cartrain', '021 456 2483', 'pascalecartrain@gmail.com', '134  Sebastopol Drive', '1989-03-08', 'Female', 'Toning', 'High blood pressure', 'NULL');
+INSERT INTO member VALUES ('11006', 'Liz', 'Nixon', '022 986 6973', 'liznixon@hotmail.com', '193  Lybster Street', '1991-06-09', 'Female', 'Build More Lean Muscle', 'Asthma', 'NULL');
+INSERT INTO member VALUES ('11007', 'Liu', 'Wong', '027 154 3984', 'liuwong@gmail.com', '55 Grizzly Peak Rd', '1996-01-13', 'Female', 'Increase flexibility', 'Diabetes', 'NULL');
+INSERT INTO member VALUES ('11008', 'Karin', 'Josephs', '027 549 3654', 'karinjosephs@hotmail.com', '233  Newcastle Street', '2001-04-02', 'Female', 'Improve endurance', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11009', 'Miguel', 'Paolino', '022 986 3454', 'miguelpaolino@gmail.com', '136  Poto Road', '2001-05-14', 'Male', 'Shed fat', 'Heart problems', 'NULL');
+INSERT INTO member VALUES ('11010', 'Matthew', 'Jimenez', '020 146 3179', '0wwxnu7hhp58@temporary-mail.net', '117 Sunrise Avenue', '1976-02-13', 'Male', 'Improve endurance', 'Asthma', 'NULL');
+INSERT INTO member VALUES ('11011', 'Margaret', 'Miller', '026 123 7911', 'szchy4ii99@temporary-mail.net', '28 Rolleston Street', '1966-02-04', 'Female', 'Stay Fit', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11012', 'Troy', 'Seng', '020 679 1673', 'dill282dr7@gmail.com', '88 Clifton Road', '1993-05-12', 'Male', 'Build muscles', 'High cholesterol', 'NULL');
+INSERT INTO member VALUES ('11013', 'John', 'Green', '021 142 4856', '0o1x6o5fxfwe@temporary-mail.net', '22 Allan Street Lake', '1972-11-21', 'Male', 'Build muscles', 'High cholesterol', 'NULL');
+INSERT INTO member VALUES ('11014', 'Levi', 'Minton', '021 165 3383', 'JKohlaaLorgh@scottsdaleskincare.co.nz', '8896 Smith Street', '1945-07-15', 'Male', 'Stay Active', 'Diabetes', 'NULL');
+INSERT INTO member VALUES ('11015', 'Maudittenand', 'Stooriane', '022 032 5733', 'MaudittenandStooriane@climbingjackets.co.nz', '8530 Aotea Place', '1984-02-26', 'Female', 'Toning', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11016', 'Surena', 'Balkhi', '027 58 8517', 'SurenaBalkhi@dreamerhomes.co.nz', '7086 Clive Square', '1945-11-02', 'Male', 'Stay active', 'Heart problems', 'NULL');
+INSERT INTO member VALUES ('11017', 'Ha', 'Liqiu', '022 884 0376', 'HaLiqiu@cdapps.co.nz', '7360 Williams Street', '1995-05-15', 'Female', 'Toning', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11018', 'Elis', 'Zheleva', '021 429 9092', 'ElisMarkovaZheleva@creditmargin.co.nz', '4212 Fieldstone Court', '1993-04-25', 'Female', 'Decrease body fat', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11019', 'Pavlina', 'Savova', '027 975 2803', 'PavlinaDanailovaSavova@lincolnsearch.co.nz', '9226 Lucas Way', '1952-06-10', 'Female', 'Increase endurance and stamina', 'Asthma', 'NULL');
+INSERT INTO member VALUES ('11020', 'Chandra', 'Thakur', '021 588 4156', 'ChandraThakur@peopleplants.co.nz', '3197 Russell Road', '1977-06-10', 'Male', 'Build muscles', 'High cholesterol', 'NULL');
+INSERT INTO member VALUES ('11021', 'Varna', 'Limzarwala', '022 294 5172', 'VarnaLimzarwala@moldprotector.co.nz', '5055 Garrett Street', '2000-06-28', 'Female', 'Decrease Body fat', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11022', 'Kaipo', 'Vong', '021 142 4856', 'KaipoVong@kbulletin.co.nz', '8099 Ann Street', '1993-11-20', 'Male', 'Build muscles', 'Asthma', 'NULL');
+INSERT INTO member VALUES ('11023', 'Selene', 'Lawrence', '022 9704 4950', 'SeleneLawrence@voipclass.co.nz', '7145 Frangipani Mews', '1954-07-14', 'Female', 'Toning', 'High blood pressure', 'NULL');
+INSERT INTO member VALUES ('11024', 'Uru', 'Nepe', '021 142 4856', 'UruManauNepe@hometownsurveys.co.nz', '6284 James Lane', '1997-01-27', 'Female', 'Build muscles', 'High cholesterol', 'NULL');
+INSERT INTO member VALUES ('11025', 'Lim', 'Long', '027 003 1291', 'LimLong@stolenpurses.co.nz', '7070 Coutts Street', '1975-08-16', 'Male', 'Keep active', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11026', 'Juan', 'Davison', '022 151 0508', 'JuanEDavison@anairport.co.nz', '3390 Cobham Place', '1945-04-17', 'Male', 'Stay fit', 'High cholesterol', 'NULL');
+INSERT INTO member VALUES ('11027', 'Tirteo', 'Camio', '027 709 6824', 'TirteoCamio@singleapartment.co.nz', '667 Margaret Road', '1969-09-05', 'Male', 'Build muscles', 'High cholesterol', 'NULL');
+INSERT INTO member VALUES ('11028', 'Sheree', 'Corey', '022 881 9587', 'SherahRumasingap@civilpride.co.nz', '1 Milwaukee Place', '1980-11-09', 'Female', 'Toning', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11029', 'Yim', 'Noreaksey', '027 348 5890', 'YimNoreaksey@naturalstorm.co.nz', '25 Colquhoun Street', '1989-03-13', 'Male', 'Build muscles', 'N/A', 'NULL');
+INSERT INTO member VALUES ('11030', 'Sultan', 'Abadi', '027 068 0943', 'SultanZaidAbadi@mediasurfers.co.nz', '36 Lochinver Avenue', '1948-02-10', 'Male', 'Decrease body fat', 'Diabetes', 'NULL');
+
+--
+-- Name: membership_type; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE membership_type (
+    membership_type varchar(15) NOT NULL PRIMARY KEY,
+    membership_type_cost real
+);
+
+--
+-- Data for Name: membership_type; Type: TABLE DATA; Schema: public; Owner: -
+--
+INSERT INTO membership_type VALUES ('weekly', '17.00');
+INSERT INTO membership_type VALUES ('monthly', '60.00');
+INSERT INTO membership_type VALUES ('yearly', '700.00');
+
+
+--
+-- Name: membership; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE membership (
+    user_id int NOT NULL,
+    membership_type varchar(15) NOT NULL,
+    left_date varchar(10),
+    join_date date,
+    membership_status varchar(15),
+    membership_dueday date,
+    balance real,
+    outstanding_amount real,
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id),
+    FOREIGN KEY (membership_type) REFERENCES membership_type(membership_type)
+);
+
+
+--
+-- Data for Name: member; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO membership (user_id,membership_type,left_date,join_date,membership_status,membership_dueday,balance,outstanding_amount) 
+VALUES
+  (11000,'weekly','NULL',DATE '2011-04-20','active',DATE '2021-03-22',0.0,0.0),
+  (11001,'monthly','NULL',DATE '2011-11-29','active',DATE '2021-04-16',0.0,0.0),
+  (11002,'yearly','NULL',DATE '2012-07-25','active',DATE '2022-03-17',0.0,0.0),
+  (11003,'weekly','NULL',DATE '2013-10-17','active',DATE '2021-03-23',0.0,0.0),
+  (11004,'monthly','NULL',DATE '2015-03-30','active',DATE '2021-04-19',0.0,0.0),
+  (11005,'weekly','NULL',DATE '2016-02-28','active',DATE '2021-03-26',0.0,0.0),
+  (11006,'yearly','NULL',DATE '2017-03-31','active',DATE '2022-03-27',0.0,0.0),
+  (11007,'yearly','NULL',DATE '2017-08-14','active',DATE '2021-11-21',0.0,0.0),
+  (11008,'weekly','NULL',DATE '2019-04-20','active',DATE '2021-04-11',0.0,0.0),
+  (11009,'monthly','NULL',DATE '2020-01-05','active',DATE '2021-04-01',0.0,0.0),
+  (11010,'weekly','NULL',DATE '2012-05-12','active',DATE '2021-03-31',0.0,0.0),
+  (11011,'monthly','NULL',DATE '2020-04-04','active',DATE '2021-04-13',0.0,0.0),
+  (11012,'monthly','NULL',DATE '2021-01-13','active',DATE '2021-04-07',0.0,0.0),
+  (11013,'yearly','NULL',DATE '2019-04-25','active',DATE '2021-07-06',0.0,0.0),
+  (11014,'weekly','NULL',DATE '2020-07-24','active',DATE '2021-03-27',0.0,0.0),
+  (11015,'weekly','NULL',DATE '2021-02-05','active',DATE '2021-04-06',0.0,0.0),
+  (11016,'monthly','NULL',DATE '2020-11-16','active',DATE '2021-04-25',0.0,0.0),
+  (11017,'monthly','NULL',DATE '2019-12-04','active',DATE '2021-04-06',0.0,0.0),
+  (11018,'monthly','NULL',DATE '2018-03-14','active',DATE '2021-07-24',0.0,0.0),
+  (11019,'weekly','NULL',DATE '2021-03-01','active',DATE '2021-04-30',0.0,0.0),
+  (11020,'yearly','NULL',DATE '2020-10-19','active',DATE '2021-12-14',0.0,0.0),
+  (11021,'weekly','NULL',DATE '2020-09-05','active',DATE '2021-04-07',0.0,0.0),
+  (11022,'yearly','NULL',DATE '2019-06-04','active',DATE '2022-01-17',0.0,0.0),
+  (11023,'weekly','NULL',DATE '2021-03-17','active',DATE '2021-04-27',0.0,0.0),
+  (11024,'monthly','NULL',DATE '2019-07-08','active',DATE '2021-04-09',0.0,0.0),
+  (11025,'monthly','NULL',DATE '2020-12-06','active',DATE '2021-05-07',0.0,0.0),
+  (11026,'weekly','NULL',DATE '2019-08-25','active',DATE '2021-05-17',0.0,0.0),
+  (11028,'weekly','NULL',DATE '2021-01-04','active',DATE '2021-04-03',0.0,0.0),
+  (11029,'monthly','NULL',DATE '2021-06-25','active',DATE '2021-04-05',0.0,0.0),
+  (11030,'monthly','NULL',DATE '2018-11-18','active',DATE '2021-07-19',0.0,0.0),
+  (11027,'monthly','NULL',DATE '2021-01-19','active',DATE '2021-06-08',0.0,0.0);
+
+
+
+--
+-- Name: membership_payment; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE membership_payment (
+    membership_payment_id SERIAL PRIMARY KEY,
+    user_id int NOT NULL,
+    payment_date timestamp, 
+    quantity int,
+    paid_amount real,  
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id)
+);
+
+--
+-- Data for Name: membership_payment; Type: TABLE DATA; Schema: public; Owner: -
+--
+INSERT INTO membership_payment VALUES ('4000','11002','2021-03-17','1','700');
+INSERT INTO membership_payment VALUES ('4001','11006','2021-03-27','1','700');
+INSERT INTO membership_payment VALUES ('4002','11007','2020-11-21','1','700');
+INSERT INTO membership_payment VALUES ('4003','11013','2020-07-06','1','700');
+INSERT INTO membership_payment VALUES ('4004','11020','2020-12-14','1','700');
+INSERT INTO membership_payment VALUES ('4005','11022','2021-01-17','1','700');
+INSERT INTO membership_payment VALUES ('4006','11001','2021-03-16','1','60');
+INSERT INTO membership_payment VALUES ('4007','11001','2021-02-16','1','60');
+INSERT INTO membership_payment VALUES ('4008','11001','2021-01-16','1','60');
+INSERT INTO membership_payment VALUES ('4009','11004','2021-03-19','1','60');
+INSERT INTO membership_payment VALUES ('4010','11004','2021-02-19','1','60');
+INSERT INTO membership_payment VALUES ('4011','11004','2021-01-19','1','60');
+INSERT INTO membership_payment VALUES ('4012','11009','2021-03-01','1','60');
+INSERT INTO membership_payment VALUES ('4013','11009','2021-02-01','1','60');
+INSERT INTO membership_payment VALUES ('4014','11009','2021-01-01','1','60');
+INSERT INTO membership_payment VALUES ('4015','11011','2021-01-13','1','60');
+INSERT INTO membership_payment VALUES ('4016','11011','2021-03-13','1','60');
+INSERT INTO membership_payment VALUES ('4017','11011','2021-02-13','1','60');
+INSERT INTO membership_payment VALUES ('4018','11012','2021-01-07','1','60');
+INSERT INTO membership_payment VALUES ('4019','11012','2021-02-07','1','60');
+INSERT INTO membership_payment VALUES ('4020','11012','2021-03-07','1','60');
+INSERT INTO membership_payment VALUES ('4021','11016','2021-03-25','1','60');
+INSERT INTO membership_payment VALUES ('4022','11016','2021-02-25','1','60');
+INSERT INTO membership_payment VALUES ('4023','11016','2021-01-25','1','60');
+INSERT INTO membership_payment VALUES ('4024','11017','2021-03-06','1','60');
+INSERT INTO membership_payment VALUES ('4025','11017','2021-02-06','1','60');
+INSERT INTO membership_payment VALUES ('4026','11017','2021-01-06','1','60');
+INSERT INTO membership_payment VALUES ('4027','11018','2021-03-24','1','60');
+INSERT INTO membership_payment VALUES ('4028','11018','2021-02-24','1','60');
+INSERT INTO membership_payment VALUES ('4029','11018','2021-01-24','1','60');
+INSERT INTO membership_payment VALUES ('4030','11024','2021-03-09','1','60');
+INSERT INTO membership_payment VALUES ('4031','11024','2021-02-09','1','60');
+INSERT INTO membership_payment VALUES ('4032','11024','2021-01-09','1','60');
+INSERT INTO membership_payment VALUES ('4033','11025','2021-03-07','1','60');
+INSERT INTO membership_payment VALUES ('4034','11025','2021-02-07','1','60');
+INSERT INTO membership_payment VALUES ('4035','11025','2021-01-07','1','60');
+INSERT INTO membership_payment VALUES ('4036','11027','2021-01-08','1','60');
+INSERT INTO membership_payment VALUES ('4037','11027','2021-02-08','1','60');
+INSERT INTO membership_payment VALUES ('4038','11027','2021-03-08','1','60');
+INSERT INTO membership_payment VALUES ('4039','11029','2021-01-05','1','60');
+INSERT INTO membership_payment VALUES ('4040','11029','2021-02-05','1','60');
+INSERT INTO membership_payment VALUES ('4041','11029','2021-03-05','1','60');
+INSERT INTO membership_payment VALUES ('4042','11030','2021-01-19','1','60');
+INSERT INTO membership_payment VALUES ('4043','11030','2021-02-19','1','60');
+INSERT INTO membership_payment VALUES ('4044','11030','2021-03-19','1','60');
+INSERT INTO membership_payment VALUES ('4045','11000','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4046','11000','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4047','11000','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4048','11000','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4049','11003','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4050','11003','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4051','11003','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4052','11003','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4053','11005','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4054','11005','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4055','11005','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4056','11005','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4057','11008','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4058','11008','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4059','11008','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4060','11008','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4061','11010','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4062','11010','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4063','11010','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4064','11010','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4065','11014','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4066','11014','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4067','11014','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4068','11014','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4069','11015','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4070','11015','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4071','11015','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4072','11015','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4073','11019','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4074','11019','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4075','11019','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4076','11019','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4077','11021','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4078','11021','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4079','11021','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4080','11021','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4081','11023','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4082','11023','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4083','11023','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4084','11023','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4085','11026','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4086','11026','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4087','11026','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4088','11026','2021-03-22','1','17');
+INSERT INTO membership_payment VALUES ('4089','11028','2021-03-01','1','17');
+INSERT INTO membership_payment VALUES ('4090','11028','2021-03-08','1','17');
+INSERT INTO membership_payment VALUES ('4091','11028','2021-03-15','1','17');
+INSERT INTO membership_payment VALUES ('4092','11028','2021-03-22','1','17');
+
+
+
+
+--
+-- Name: trainer; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE trainer
+(
+   user_id              integer        NOT NULL,
+   first_name           varchar(30)    NOT NULL,
+   last_name            varchar(30),
+   phone_number         varchar(24),
+   email_address        varchar(60),
+   address              varchar(60),
+   date_of_birth        date,
+   gender               varchar(10),
+   specialty            text,
+   years_of_experience  varchar(10),
+   certification        text,
+   photo_url            varchar(255),
+   status               varchar(15)
+);
+
+ALTER TABLE trainer
+  ADD CONSTRAINT trainer_user_id_fkey FOREIGN KEY (user_id)
+  REFERENCES authorisation (user_id) 
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE trainer
+   ADD CONSTRAINT trainerid UNIQUE (user_id);                                                        
+
+--
+-- Data for Name: trainer; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO trainer VALUES ('10100', 'Vincent', 'Van Gogh', '0211234567', 'van.vincent@gmail.com', '187 Seddon Street', '1990-01-05', 'Male','Boxing', '5 years', 'Certified Personal Trainer', 'NULL');
+INSERT INTO trainer VALUES ('10101', 'Lucy', 'Cassel', '0221234567', 'Cas.Lucy@gmail.com', '9 Millar Street', '1992-05-13', 'Female','Yoga', '3 years', 'Certified Personal Trainer', 'NULL');
+INSERT INTO trainer VALUES ('10102', 'Mike', 'Lance', '0271234567', 'Lan.Mike@gmail.com', '234 Fisher Avenue', '1991-07-20', 'Male','Bodycombat', '5 years', 'Certified Personal Trainer', 'NULL');
+INSERT INTO trainer VALUES ('10103', 'Eddie', 'Thompson', '0217654321', 'Tho.Eddie@gmail.com', '11 Tuscany Place', '1989-09-10', 'Male','HIIT', '7 years', 'Certified Personal Trainer', 'NULL');
+INSERT INTO trainer VALUES ('10104', 'Jessica', 'Oliver', '0277654321', 'Oli.Jessica@gmail.com', '101 Martin Avenue', '1993-11-04', 'Female','Sprint', '3 years', 'Certified Personal Trainer', 'NULL');
+
+
+--
+-- Name: pt_class; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE pt_class (
+    pt_class_id SERIAL PRIMARY KEY,
+    user_id int NOT NULL,
+    pt_class_date date,
+    pt_class_time time,
+    pt_class_cost real,
+    pt_class_day varchar(15),
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id)
+);
+	
+
+--
+-- Data for Name: pt_class; Type: TABLE DATA; Schema: public; Owner: -
+--
+INSERT INTO pt_class VALUES ('1000', '10100', '2021-02-01', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1111', '10100', '2021-02-02', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1112', '10100', '2021-02-03', '07:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1113', '10100', '2021-02-04', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1114', '10100', '2021-02-05', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1115', '10101', '2021-02-01', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1116', '10101', '2021-02-02', '06:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1117', '10101', '2021-02-03', '06:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1118', '10101', '2021-02-04', '06:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1119', '10101', '2021-02-05', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1120', '10102', '2021-02-01', '08:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1121', '10102', '2021-02-02', '08:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1122', '10102', '2021-02-03', '08:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1123', '10102', '2021-02-04', '08:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1124', '10102', '2021-02-05', '08:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1125', '10103', '2021-02-01', '10:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1126', '10103', '2021-02-02', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1127', '10103', '2021-02-03', '10:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1128', '10103', '2021-02-04', '10:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1129', '10103', '2021-02-05', '10:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1130', '10104', '2021-02-01', '12:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1131', '10104', '2021-02-02', '12:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1132', '10104', '2021-02-03', '12:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1133', '10104', '2021-02-04', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1134', '10104', '2021-02-05', '12:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1135', '10100', '2021-02-08', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1136', '10100', '2021-02-09', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1137', '10100', '2021-02-10', '07:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1138', '10100', '2021-02-11', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1139', '10100', '2021-02-12', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1140', '10101', '2021-02-08', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1141', '10101', '2021-02-09', '06:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1142', '10101', '2021-02-10', '06:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1143', '10101', '2021-02-11', '06:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1144', '10101', '2021-02-12', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1145', '10102', '2021-02-08', '08:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1146', '10102', '2021-02-09', '08:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1147', '10102', '2021-02-10', '08:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1148', '10102', '2021-02-11', '08:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1149', '10102', '2021-02-12', '08:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1150', '10103', '2021-02-08', '10:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1151', '10103', '2021-02-09', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1152', '10103', '2021-02-10', '10:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1153', '10103', '2021-02-11', '10:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1154', '10103', '2021-02-12', '10:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1155', '10104', '2021-02-08', '12:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1156', '10104', '2021-02-09', '12:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1157', '10104', '2021-02-10', '12:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1158', '10104', '2021-02-11', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1159', '10104', '2021-02-12', '12:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1160', '10100', '2021-02-15', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1161', '10100', '2021-02-16', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1162', '10100', '2021-02-17', '07:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1163', '10100', '2021-02-18', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1164', '10100', '2021-02-19', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1165', '10101', '2021-02-15', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1166', '10101', '2021-02-16', '06:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1167', '10101', '2021-02-17', '06:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1168', '10101', '2021-02-18', '06:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1169', '10101', '2021-02-19', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1170', '10102', '2021-02-15', '08:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1171', '10102', '2021-02-16', '08:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1172', '10102', '2021-02-17', '08:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1173', '10102', '2021-02-18', '08:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1174', '10102', '2021-02-19', '08:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1175', '10103', '2021-02-15', '10:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1176', '10103', '2021-02-16', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1177', '10103', '2021-02-17', '10:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1178', '10103', '2021-02-18', '10:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1179', '10103', '2021-02-19', '10:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1180', '10104', '2021-02-15', '12:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1181', '10104', '2021-02-16', '12:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1182', '10104', '2021-02-17', '12:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1183', '10104', '2021-02-18', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1184', '10104', '2021-02-19', '12:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1185', '10100', '2021-02-22', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1186', '10100', '2021-02-23', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1187', '10100', '2021-02-24', '07:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1188', '10100', '2021-02-25', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1189', '10100', '2021-02-26', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1190', '10101', '2021-02-22', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1191', '10101', '2021-02-23', '06:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1192', '10101', '2021-02-24', '06:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1193', '10101', '2021-02-25', '06:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1194', '10101', '2021-02-26', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1195', '10102', '2021-02-22', '08:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1196', '10102', '2021-02-23', '08:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1197', '10102', '2021-02-24', '08:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1198', '10102', '2021-02-25', '08:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1199', '10102', '2021-02-26', '08:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1200', '10103', '2021-02-22', '10:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1201', '10103', '2021-02-23', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1202', '10103', '2021-02-24', '10:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1203', '10103', '2021-02-25', '10:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1204', '10103', '2021-02-26', '10:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1205', '10104', '2021-02-22', '12:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1206', '10104', '2021-02-23', '12:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1207', '10104', '2021-02-24', '12:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1208', '10104', '2021-02-25', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1209', '10104', '2021-02-26', '12:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1210', '10100', '2021-03-01', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1211', '10100', '2021-03-02', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1212', '10100', '2021-03-03', '07:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1213', '10100', '2021-03-04', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1214', '10100', '2021-03-05', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1215', '10101', '2021-03-08', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1216', '10101', '2021-03-09', '06:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1217', '10101', '2021-03-10', '06:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1218', '10101', '2021-03-11', '06:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1219', '10101', '2021-03-12', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1220', '10102', '2021-03-15', '08:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1221', '10102', '2021-03-16', '08:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1222', '10102', '2021-03-17', '08:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1223', '10102', '2021-03-18', '08:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1224', '10102', '2021-03-19', '08:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1225', '10103', '2021-03-22', '10:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1226', '10103', '2021-03-23', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1227', '10103', '2021-03-24', '10:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1228', '10103', '2021-03-25', '10:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1229', '10103', '2021-03-26', '10:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1230', '10104', '2021-03-29', '12:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1231', '10104', '2021-03-30', '12:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1232', '10104', '2021-03-31', '12:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1233', '10104', '2021-04-01', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1234', '10104', '2021-04-02', '12:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1235', '10100', '2021-04-05', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1236', '10100', '2021-04-06', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1237', '10100', '2021-04-07', '07:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1238', '10100', '2021-04-08', '12:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1239', '10100', '2021-04-09', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1240', '10101', '2021-04-12', '06:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1241', '10101', '2021-04-13', '06:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1242', '10101', '2021-04-14', '06:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1243', '10101', '2021-04-15', '06:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1244', '10101', '2021-04-16', '06:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1245', '10102', '2021-04-19', '08:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1246', '10102', '2021-04-20', '08:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1247', '10102', '2021-04-19', '08:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1248', '10102', '2021-04-21', '08:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1249', '10102', '2021-04-22', '08:00:00', '50', 'Friday');INSERT INTO pt_class VALUES ('1250', '10103', '2021-04-26', '10:00:00', '50', 'Monday');INSERT INTO pt_class VALUES ('1251', '10103', '2021-04-27', '10:00:00', '50', 'Tuesday');INSERT INTO pt_class VALUES ('1252', '10103', '2021-04-28', '10:00:00', '50', 'Wednesday');INSERT INTO pt_class VALUES ('1253', '10103', '2021-04-29', '10:00:00', '50', 'Thursday');INSERT INTO pt_class VALUES ('1254', '10103', '2021-04-30', '10:00:00', '50', 'Friday');
+
+
+--
+-- Name: pt_booking; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE pt_booking (
+    pt_booking_id SERIAL PRIMARY KEY,
+    pt_class_id int NOT NULL,
+    user_id int NOT NULL,
+    booking_date date,
+    booking_status varchar(20),
+    cancel_date date,
+    attendance_status varchar(20),
+    FOREIGN KEY (pt_class_id) REFERENCES pt_class(pt_class_id),
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id)
+);
+
+
+--
+-- Data for Name: pt_booking; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5163', '1000', '11000', '2021-02-01', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5164', '1114', '11000', '2021-02-01', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5165', '1135', '11000', '2021-02-05', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5166', '1139', '11000', '2021-02-11', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5167', '1160', '11000', '2021-02-11', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5168', '1164', '11000', '2021-02-18', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5169', '1185', '11000', '2021-02-18', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5170', '1189', '11000', '2021-02-18', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5171', '1210', '11000', '2021-02-28', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5172', '1214', '11000', '2021-02-28', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5173', '1235', '11000', '2021-03-24', 'payed', 'NULL');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5174', '1239', '11000', '2021-03-28', 'payed', 'NULL');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5175', '1120', '11001', '2021-01-28', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5176', '1122', '11001', '2021-01-28', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5177', '1155', '11001', '2021-02-03', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5178', '1157', '11001', '2021-02-03', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5179', '1170', '11001', '2021-02-10', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5180', '1172', '11001', '2021-02-10', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5181', '1195', '11001', '2021-02-15', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5182', '1197', '11001', '2021-02-15', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5183', '1220', '11001', '2021-03-07', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5184', '1222', '11001', '2021-03-07', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5185', '1230', '11001', '2021-03-20', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5186', '1232', '11001', '2021-03-20', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5187', '1245', '11001', '2021-03-27', 'payed', 'NULL');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5188', '1126', '11010', '2021-01-29', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5189', '1128', '11010', '2021-01-29', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5190', '1151', '11010', '2021-02-01', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5191', '1153', '11010', '2021-02-01', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5192', '1176', '11010', '2021-02-07', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5193', '1178', '11010', '2021-02-07', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5194', '1201', '11010', '2021-02-20', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5195', '1203', '11010', '2021-02-20', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5196', '1226', '11010', '2021-03-20', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5197', '1228', '11010', '2021-03-22', 'payed', 'present');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5198', '1251', '11010', '2021-03-25', 'payed', 'NULL');INSERT INTO pt_booking (pt_booking_id, pt_class_id, user_id, booking_date, booking_status, attendance_status) VALUES ('5199', '1253', '11010', '2021-03-25', 'payed', 'NULL');
+
+--
+-- Name: pt_payment; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE pt_payment (
+    pt_payment_id SERIAL PRIMARY KEY,
+    pt_booking_id int,
+    payment_date timestamp,
+    paid_amount real, 
+    FOREIGN KEY (pt_booking_id) REFERENCES pt_booking(pt_booking_id)
+);
+
+--
+-- Data for Name: pt_payment; Type: TABLE DATA; Schema: public; Owner: -
+--
+INSERT INTO pt_payment VALUES ('3001', '5164', '2021-02-01 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3002', '5165', '2021-02-05 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3003', '5166', '2021-02-11 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3004', '5167', '2021-02-11 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3005', '5168', '2021-02-18 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3006', '5169', '2021-02-18 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3007', '5170', '2021-02-18 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3008', '5171', '2021-02-28 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3009', '5172', '2021-02-28 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3010', '5173', '2021-03-24 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3011', '5174', '2021-03-28 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3012', '5175', '2021-01-28 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3013', '5176', '2021-01-28 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3014', '5177', '2021-02-03 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3015', '5178', '2021-02-03 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3016', '5179', '2021-02-10 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3017', '5180', '2021-02-10 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3018', '5181', '2021-02-15 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3019', '5182', '2021-02-15 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3020', '5183', '2021-03-07 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3021', '5184', '2021-03-07 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3022', '5185', '2021-03-20 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3023', '5186', '2021-03-20 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3024', '5187', '2021-03-27 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3025', '5188', '2021-01-29 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3026', '5189', '2021-01-29 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3027', '5190', '2021-02-01 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3028', '5191', '2021-02-01 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3029', '5192', '2021-02-07 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3030', '5193', '2021-02-07 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3031', '5194', '2021-02-20 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3032', '5195', '2021-02-20 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3033', '5196', '2021-03-20 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3034', '5197', '2021-03-22 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3035', '5198', '2021-03-25 00:00:00', '50.00');INSERT INTO pt_payment VALUES ('3036', '5199', '2021-03-25 00:00:00', '50.00');
+
+--
+-- Name: pt_refund; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE pt_refund (
+    pt_refund_id SERIAL PRIMARY KEY,
+    pt_booking_id int,
+    refund_date timestamp,
+    refund_amount real, 
+    FOREIGN KEY (pt_booking_id) REFERENCES pt_booking(pt_booking_id)
+);
+
+
+--
+-- Name: group_class; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE group_class (
+    group_class_id SERIAL PRIMARY KEY,
+    user_id int NOT NULL,
+    group_class_name varchar(30),
+    description text,
+    maximum_number int,
+    location varchar(20),
+    group_class_date varchar(30), 
+    group_class_day varchar(20), 
+    group_class_start_time varchar(20), 
+    group_class_end_time varchar(20),
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id)
+);
+
+--
+-- Data for Name: group_class; Type: TABLE DATA; Schema: public; Owner: -
+--
+INSERT INTO group_class VALUES ('656', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-01-04', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('657', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-01-05', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('658', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-01-06', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('659', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-01-07', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('660', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-01-08', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('661', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-01-11', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('662', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-01-12', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('663', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-01-13', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('664', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-01-14', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('665', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-01-15', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('666', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-01-18', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('667', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-01-19', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('668', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-01-20', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('669', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-01-21', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('670', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-01-22', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('671', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-01-25', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('672', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-01-26', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('674', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-01-28', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('675', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-01-29', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('676', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-02-01', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('677', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-02-02', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('678', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-02-03', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('679', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-02-04', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('680', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-02-05', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('681', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-02-08', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('682', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-02-09', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('683', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-02-10', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('684', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-02-11', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('685', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-02-12', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('686', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-02-15', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('687', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-02-16', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('688', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-02-17', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('689', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-02-18', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('690', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-02-19', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('696', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-02-22', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('697', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-02-23', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('698', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-02-24', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('699', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-02-25', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('700', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-02-26', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('701', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-03-15', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('702', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-03-16', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('703', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-03-17', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('704', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-03-18', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('705', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-03-19', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('706', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-03-22', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('707', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-03-23', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('708', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-03-24', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('709', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-03-25', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('710', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-03-26', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('711', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-03-29', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('712', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-03-30', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('713', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-03-31', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('714', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-04-01', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('715', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-04-02', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('716', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-04-05', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('717', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-04-06', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('718', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-04-07', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('719', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-04-08', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('720', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-04-09', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('721', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-04-12', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('722', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-04-13', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('723', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-04-14', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('724', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-04-15', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('725', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-04-16', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('726', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-04-19', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('727', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-04-20', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('728', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-04-21', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('729', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-04-22', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('730', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-04-23', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('731', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-04-26', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('732', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-04-27', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('733', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-04-28', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('734', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-04-29', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('735', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-04-30', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('736', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-05-03', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('737', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-05-04', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('738', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-05-05', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('739', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-05-06', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('740', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-05-07', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('741', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-05-10', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('742', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-05-11', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('743', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-05-12', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('744', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-05-13', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('745', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-05-14', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('746', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-05-17', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('747', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-05-18', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('748', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-05-19', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('749', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-05-20', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('750', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-05-21', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('751', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-05-24', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('752', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-05-25', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('753', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-05-26', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('754', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-05-27', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('755', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-05-28', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('756', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-05-31', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('757', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-06-01', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('758', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-06-02', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('759', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-06-03', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('760', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-06-04', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('761', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-06-07', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('762', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-06-08', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('763', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-06-09', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('764', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-06-10', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('765', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-06-11', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('766', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-06-14', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('767', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-06-15', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('768', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-06-16', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('769', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-06-17', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('770', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-06-18', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('771', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-06-21', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('772', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-06-22', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('773', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-06-23', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('774', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-06-24', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('775', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-06-25', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('776', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-06-28', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('777', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-06-29', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('778', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-06-30', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('779', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-07-01', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('780', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-07-02', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('781', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-07-05', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('782', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-07-06', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('783', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-07-07', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('784', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-07-08', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('785', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-07-09', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('786', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-07-12', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('787', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-07-13', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('788', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-07-14', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('789', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-07-15', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('790', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-07-16', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('791', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-07-19', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('792', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-07-20', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('793', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-07-21', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('794', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-07-22', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('795', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-07-23', 'Friday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('796', '10100', 'BOX FIT', 'Boxfit is a fantastic workout that combines punching drills with a wide range of exercises to help you get in shape like a champion.', '30',  'Studio 1', '2021-07-26', 'Monday', '19:00:00', '20:00:00');INSERT INTO group_class VALUES ('797', '10101', 'Yoga', 'This Yoga course is great if you are brand new to yoga or for anyone just wanting to refresh their knowledge of the main principles of yoga.', '30',  'Studio 2', '2021-07-27', 'Tuesday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('798', '10102', 'Body Combat', 'Bodycombat is a high-energy martial-arts inspired workout, and you will be challenged to make the most of every round.', '30',  'Studio 1', '2021-07-28', 'Wednesday', '18:00:00', '19:00:00');INSERT INTO group_class VALUES ('799', '10103', 'Grit Cardio', 'Grit Cardio is a high-intensity interval training workout that improves cardiovascular fitness, increases speed and maximizes calorie burn.', '30',  'Studio 1', '2021-07-29', 'Thursday', '17:00:00', '18:00:00');INSERT INTO group_class VALUES ('800', '10104', 'Sprint', 'Sprint is another HIIT workout, this uses indoor bike and it will drive your body to burn calories for hours.', '30',  'Cycle Studio', '2021-07-30', 'Friday', '19:00:00', '20:00:00');
+
+--
+-- Name: group_booking; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE group_booking (
+    group_booking_id SERIAL PRIMARY KEY,
+    group_class_id int NOT NULL,
+    user_id int,
+    booking_date date,
+    booking_status varchar(20),
+    cancel_date date,
+    attendance_status varchar(20),
+    FOREIGN KEY (group_class_id) REFERENCES group_class(group_class_id),
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id)
+);
+
+--
+-- Data for Name: group_booking; Type: TABLE DATA; Schema: public; Owner: -
+--
+INSERT INTO group_booking (group_class_id,user_id,booking_date,booking_status,cancel_date,attendance_status) 
+VALUES
+  (703,11005,DATE '2021-03-12','booked',NULL,NULL),
+  (701,11005,DATE '2021-03-12','booked',DATE '2021-03-15',NULL),
+  (708,11000,DATE '2021-03-25','booked',NULL,NULL),
+  (713,11000,DATE '2021-03-25','booked',NULL,NULL),
+  (703,11004,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11005,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11006,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11007,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11008,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11009,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11010,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11011,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11012,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11013,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11014,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11015,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11016,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11017,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11018,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11019,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11020,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11021,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11022,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11023,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11024,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11025,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11026,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11027,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11028,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11029,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11000,DATE '2021-03-12','booked',NULL,NULL),
+  (703,11002,DATE '2021-03-12','booked',NULL,NULL),
+  (701,11000,DATE '2021-03-12','booked',DATE '2021-03-28',NULL),
+  (704,11000,DATE '2021-03-26','booked',NULL,NULL),
+  (703,11000,DATE '2021-03-26','booked',NULL,NULL),
+  (702,11001,DATE '2021-03-12','booked',NULL,'present'),
+  (702,11001,DATE '2021-03-12','booked',NULL,'present'),
+  (703,11001,DATE '2021-03-12','booked',NULL,'present'),
+  (705,11001,DATE '2021-03-18','booked',NULL,NULL),
+  (702,11000,DATE '2021-03-28','booked',NULL,NULL),
+  (656,11000,NULL,NULL,NULL,'present'),
+  (656,11002,NULL,NULL,NULL,'present'),
+  (656,11004,NULL,NULL,NULL,'present'),
+  (656,11005,NULL,NULL,NULL,'present'),
+  (656,11006,NULL,NULL,NULL,'present'),
+  (656,11007,NULL,NULL,NULL,'present'),
+  (656,11008,NULL,NULL,NULL,'present'),
+  (656,11009,NULL,NULL,NULL,'present'),
+  (657,11000,NULL,NULL,NULL,'present'),
+  (657,11002,NULL,NULL,NULL,'present'),
+  (657,11004,NULL,NULL,NULL,'present'),
+  (657,11005,NULL,NULL,NULL,'present'),
+  (657,11006,NULL,NULL,NULL,'present'),
+  (657,11007,NULL,NULL,NULL,'present'),
+  (657,11008,NULL,NULL,NULL,'present'),
+  (657,11009,NULL,NULL,NULL,'present'),
+  (657,11003,NULL,NULL,NULL,'present'),
+  (657,11010,NULL,NULL,NULL,'present'),
+  (657,11011,NULL,NULL,NULL,'present'),
+  (657,11012,NULL,NULL,NULL,'present'),
+  (657,11013,NULL,NULL,NULL,'present'),
+  (657,11014,NULL,NULL,NULL,'present'),
+  (657,11015,NULL,NULL,NULL,'present'),
+  (657,11016,NULL,NULL,NULL,'present'),
+  (657,11017,NULL,NULL,NULL,'present'),
+  (657,11018,NULL,NULL,NULL,'present'),
+  (657,11019,NULL,NULL,NULL,'present'),
+  (657,11020,NULL,NULL,NULL,'present'),
+  (657,11021,NULL,NULL,NULL,'present'),
+  (658,11017,NULL,NULL,NULL,'present'),
+  (658,11018,NULL,NULL,NULL,'present'),
+  (658,11019,NULL,NULL,NULL,'present'),
+  (658,11020,NULL,NULL,NULL,'present'),
+  (658,11021,NULL,NULL,NULL,'present'),
+  (658,11022,NULL,NULL,NULL,'present'),
+  (658,11023,NULL,NULL,NULL,'present'),
+  (658,11024,NULL,NULL,NULL,'present'),
+  (658,11025,NULL,NULL,NULL,'present'),
+  (658,11026,NULL,NULL,NULL,'present'),
+  (658,11027,NULL,NULL,NULL,'present'),
+  (658,11028,NULL,NULL,NULL,'present'),
+  (658,11029,NULL,NULL,NULL,'present'),
+  (658,11030,NULL,NULL,NULL,'present'),
+  (658,11001,NULL,NULL,NULL,'present'),
+  (659,11011,NULL,NULL,NULL,'present'),
+  (659,11012,NULL,NULL,NULL,'present'),
+  (659,11013,NULL,NULL,NULL,'present'),
+  (659,11014,NULL,NULL,NULL,'present'),
+  (659,11015,NULL,NULL,NULL,'present'),
+  (660,11021,NULL,NULL,NULL,'present'),
+  (660,11022,NULL,NULL,NULL,'present'),
+  (660,11023,NULL,NULL,NULL,'present'),
+  (660,11024,NULL,NULL,NULL,'present'),
+  (660,11025,NULL,NULL,NULL,'present'),
+  (660,11026,NULL,NULL,NULL,'present'),
+  (660,11027,NULL,NULL,NULL,'present'),
+  (660,11028,NULL,NULL,NULL,'present'),
+  (660,11029,NULL,NULL,NULL,'present'),
+  (660,11030,NULL,NULL,NULL,'present'),
+  (660,11001,NULL,NULL,NULL,'present'),
+  (661,11000,NULL,NULL,NULL,'present'),
+  (661,11002,NULL,NULL,NULL,'present'),
+  (661,11004,NULL,NULL,NULL,'present'),
+  (661,11005,NULL,NULL,NULL,'present'),
+  (661,11006,NULL,NULL,NULL,'present'),
+  (661,11007,NULL,NULL,NULL,'present'),
+  (661,11008,NULL,NULL,NULL,'present'),
+  (661,11009,NULL,NULL,NULL,'present'),
+  (662,11000,NULL,NULL,NULL,'present'),
+  (662,11002,NULL,NULL,NULL,'present'),
+  (662,11004,NULL,NULL,NULL,'present'),
+  (662,11005,NULL,NULL,NULL,'present'),
+  (662,11006,NULL,NULL,NULL,'present'),
+  (662,11007,NULL,NULL,NULL,'present'),
+  (662,11008,NULL,NULL,NULL,'present'),
+  (662,11009,NULL,NULL,NULL,'present'),
+  (662,11003,NULL,NULL,NULL,'present'),
+  (662,11010,NULL,NULL,NULL,'present'),
+  (662,11011,NULL,NULL,NULL,'present'),
+  (662,11012,NULL,NULL,NULL,'present'),
+  (662,11013,NULL,NULL,NULL,'present'),
+  (662,11014,NULL,NULL,NULL,'present'),
+  (662,11015,NULL,NULL,NULL,'present'),
+  (662,11016,NULL,NULL,NULL,'present'),
+  (662,11017,NULL,NULL,NULL,'present'),
+  (662,11018,NULL,NULL,NULL,'present'),
+  (662,11019,NULL,NULL,NULL,'present'),
+  (662,11020,NULL,NULL,NULL,'present'),
+  (662,11021,NULL,NULL,NULL,'present'),
+  (662,11022,NULL,NULL,NULL,'present'),
+  (662,11023,NULL,NULL,NULL,'present'),
+  (662,11024,NULL,NULL,NULL,'present'),
+  (662,11025,NULL,NULL,NULL,'present'),
+  (662,11026,NULL,NULL,NULL,'present'),
+  (662,11027,NULL,NULL,NULL,'present'),
+  (662,11028,NULL,NULL,NULL,'present'),
+  (662,11029,NULL,NULL,NULL,'present'),
+  (663,11017,NULL,NULL,NULL,'present'),
+  (663,11018,NULL,NULL,NULL,'present'),
+  (663,11019,NULL,NULL,NULL,'present'),
+  (663,11020,NULL,NULL,NULL,'present'),
+  (663,11021,NULL,NULL,NULL,'present'),
+  (663,11022,NULL,NULL,NULL,'present'),
+  (663,11023,NULL,NULL,NULL,'present'),
+  (663,11024,NULL,NULL,NULL,'present'),
+  (663,11025,NULL,NULL,NULL,'present'),
+  (663,11026,NULL,NULL,NULL,'present'),
+  (663,11027,NULL,NULL,NULL,'present'),
+  (663,11028,NULL,NULL,NULL,'present'),
+  (663,11029,NULL,NULL,NULL,'present'),
+  (663,11030,NULL,NULL,NULL,'present'),
+  (663,11001,NULL,NULL,NULL,'present'),
+  (664,11011,NULL,NULL,NULL,'present'),
+  (664,11012,NULL,NULL,NULL,'present'),
+  (664,11013,NULL,NULL,NULL,'present'),
+  (664,11014,NULL,NULL,NULL,'present'),
+  (665,11021,NULL,NULL,NULL,'present'),
+  (665,11022,NULL,NULL,NULL,'present'),
+  (665,11023,NULL,NULL,NULL,'present'),
+  (665,11024,NULL,NULL,NULL,'present'),
+  (665,11025,NULL,NULL,NULL,'present'),
+  (665,11026,NULL,NULL,NULL,'present'),
+  (665,11027,NULL,NULL,NULL,'present'),
+  (665,11028,NULL,NULL,NULL,'present'),
+  (666,11000,NULL,NULL,NULL,'present'),
+  (666,11002,NULL,NULL,NULL,'present'),
+  (666,11004,NULL,NULL,NULL,'present'),
+  (666,11005,NULL,NULL,NULL,'present'),
+  (666,11006,NULL,NULL,NULL,'present'),
+  (667,11000,NULL,NULL,NULL,'present'),
+  (667,11002,NULL,NULL,NULL,'present'),
+  (667,11004,NULL,NULL,NULL,'present'),
+  (667,11005,NULL,NULL,NULL,'present'),
+  (667,11006,NULL,NULL,NULL,'present'),
+  (667,11007,NULL,NULL,NULL,'present'),
+  (667,11008,NULL,NULL,NULL,'present'),
+  (667,11009,NULL,NULL,NULL,'present'),
+  (667,11003,NULL,NULL,NULL,'present'),
+  (667,11010,NULL,NULL,NULL,'present'),
+  (668,11017,NULL,NULL,NULL,'present'),
+  (668,11018,NULL,NULL,NULL,'present'),
+  (668,11019,NULL,NULL,NULL,'present'),
+  (668,11020,NULL,NULL,NULL,'present'),
+  (668,11021,NULL,NULL,NULL,'present'),
+  (668,11022,NULL,NULL,NULL,'present'),
+  (668,11023,NULL,NULL,NULL,'present'),
+  (668,11024,NULL,NULL,NULL,'present'),
+  (668,11025,NULL,NULL,NULL,'present'),
+  (668,11026,NULL,NULL,NULL,'present'),
+  (668,11027,NULL,NULL,NULL,'present'),
+  (668,11028,NULL,NULL,NULL,'present'),
+  (668,11029,NULL,NULL,NULL,'present'),
+  (668,11030,NULL,NULL,NULL,'present'),
+  (668,11001,NULL,NULL,NULL,'present'),
+  (669,11011,NULL,NULL,NULL,'present'),
+  (669,11012,NULL,NULL,NULL,'present'),
+  (669,11013,NULL,NULL,NULL,'present'),
+  (669,11014,NULL,NULL,NULL,'present'),
+  (669,11015,NULL,NULL,NULL,'present'),
+  (669,11016,NULL,NULL,NULL,'present'),
+  (669,11017,NULL,NULL,NULL,'present'),
+  (669,11018,NULL,NULL,NULL,'present'),
+  (669,11019,NULL,NULL,NULL,'present'),
+  (670,11021,NULL,NULL,NULL,'present'),
+  (670,11022,NULL,NULL,NULL,'present'),
+  (670,11023,NULL,NULL,NULL,'present'),
+  (670,11024,NULL,NULL,NULL,'present'),
+  (670,11025,NULL,NULL,NULL,'present'),
+  (670,11026,NULL,NULL,NULL,'present'),
+  (671,11000,NULL,NULL,NULL,'present'),
+  (671,11002,NULL,NULL,NULL,'present'),
+  (671,11004,NULL,NULL,NULL,'present'),
+  (671,11005,NULL,NULL,NULL,'present'),
+  (671,11006,NULL,NULL,NULL,'present'),
+  (672,11000,NULL,NULL,NULL,'present'),
+  (672,11002,NULL,NULL,NULL,'present'),
+  (672,11004,NULL,NULL,NULL,'present'),
+  (672,11005,NULL,NULL,NULL,'present'),
+  (672,11006,NULL,NULL,NULL,'present'),
+  (672,11007,NULL,NULL,NULL,'present'),
+  (672,11008,NULL,NULL,NULL,'present'),
+  (672,11009,NULL,NULL,NULL,'present'),
+  (672,11003,NULL,NULL,NULL,'present'),
+  (672,11010,NULL,NULL,NULL,'present'),
+  (674,11011,NULL,NULL,NULL,'present'),
+  (674,11012,NULL,NULL,NULL,'present'),
+  (674,11013,NULL,NULL,NULL,'present'),
+  (674,11014,NULL,NULL,NULL,'present'),
+  (674,11015,NULL,NULL,NULL,'present'),
+  (674,11016,NULL,NULL,NULL,'present'),
+  (674,11017,NULL,NULL,NULL,'present'),
+  (674,11018,NULL,NULL,NULL,'present'),
+  (674,11019,NULL,NULL,NULL,'present'),
+  (675,11021,NULL,NULL,NULL,'present'),
+  (675,11022,NULL,NULL,NULL,'present'),
+  (675,11023,NULL,NULL,NULL,'present'),
+  (675,11024,NULL,NULL,NULL,'present'),
+  (675,11025,NULL,NULL,NULL,'present'),
+  (675,11026,NULL,NULL,NULL,'present'),
+  (680,11000,NULL,NULL,NULL,'present'),
+  (680,11002,NULL,NULL,NULL,'present'),
+  (680,11004,NULL,NULL,NULL,'present'),
+  (680,11005,NULL,NULL,NULL,'present'),
+  (680,11006,NULL,NULL,NULL,'present'),
+  (677,11000,NULL,NULL,NULL,'present'),
+  (677,11002,NULL,NULL,NULL,'present'),
+  (677,11004,NULL,NULL,NULL,'present'),
+  (677,11005,NULL,NULL,NULL,'present'),
+  (677,11006,NULL,NULL,NULL,'present'),
+  (677,11007,NULL,NULL,NULL,'present'),
+  (677,11008,NULL,NULL,NULL,'present'),
+  (677,11009,NULL,NULL,NULL,'present'),
+  (677,11003,NULL,NULL,NULL,'present'),
+  (677,11010,NULL,NULL,NULL,'present'),
+  (679,11017,NULL,NULL,NULL,'present'),
+  (679,11018,NULL,NULL,NULL,'present'),
+  (679,11019,NULL,NULL,NULL,'present'),
+  (679,11020,NULL,NULL,NULL,'present'),
+  (679,11021,NULL,NULL,NULL,'present'),
+  (679,11022,NULL,NULL,NULL,'present'),
+  (679,11023,NULL,NULL,NULL,'present'),
+  (679,11024,NULL,NULL,NULL,'present'),
+  (679,11025,NULL,NULL,NULL,'present'),
+  (679,11026,NULL,NULL,NULL,'present'),
+  (679,11027,NULL,NULL,NULL,'present'),
+  (679,11028,NULL,NULL,NULL,'present'),
+  (679,11029,NULL,NULL,NULL,'present'),
+  (679,11030,NULL,NULL,NULL,'present'),
+  (679,11001,NULL,NULL,NULL,'present'),
+  (678,11011,NULL,NULL,NULL,'present'),
+  (678,11012,NULL,NULL,NULL,'present'),
+  (678,11013,NULL,NULL,NULL,'present'),
+  (678,11014,NULL,NULL,NULL,'present'),
+  (678,11015,NULL,NULL,NULL,'present'),
+  (678,11016,NULL,NULL,NULL,'present'),
+  (678,11017,NULL,NULL,NULL,'present'),
+  (678,11018,NULL,NULL,NULL,'present'),
+  (678,11019,NULL,NULL,NULL,'present'),
+  (676,11021,NULL,NULL,NULL,'present'),
+  (676,11022,NULL,NULL,NULL,'present'),
+  (676,11023,NULL,NULL,NULL,'present'),
+  (676,11024,NULL,NULL,NULL,'present'),
+  (685,11000,NULL,NULL,NULL,'present'),
+  (685,11002,NULL,NULL,NULL,'present'),
+  (685,11004,NULL,NULL,NULL,'present'),
+  (685,11005,NULL,NULL,NULL,'present'),
+  (685,11006,NULL,NULL,NULL,'present'),
+  (681,11000,NULL,NULL,NULL,'present'),
+  (681,11002,NULL,NULL,NULL,'present'),
+  (681,11004,NULL,NULL,NULL,'present'),
+  (681,11005,NULL,NULL,NULL,'present'),
+  (681,11006,NULL,NULL,NULL,'present'),
+  (681,11007,NULL,NULL,NULL,'present'),
+  (681,11008,NULL,NULL,NULL,'present'),
+  (681,11009,NULL,NULL,NULL,'present'),
+  (681,11003,NULL,NULL,NULL,'present'),
+  (681,11010,NULL,NULL,NULL,'present'),
+  (684,11017,NULL,NULL,NULL,'present'),
+  (684,11018,NULL,NULL,NULL,'present'),
+  (684,11019,NULL,NULL,NULL,'present'),
+  (684,11020,NULL,NULL,NULL,'present'),
+  (684,11021,NULL,NULL,NULL,'present'),
+  (684,11022,NULL,NULL,NULL,'present'),
+  (684,11023,NULL,NULL,NULL,'present'),
+  (684,11024,NULL,NULL,NULL,'present'),
+  (684,11025,NULL,NULL,NULL,'present'),
+  (684,11026,NULL,NULL,NULL,'present'),
+  (684,11027,NULL,NULL,NULL,'present'),
+  (684,11028,NULL,NULL,NULL,'present'),
+  (684,11029,NULL,NULL,NULL,'present'),
+  (684,11030,NULL,NULL,NULL,'present'),
+  (684,11001,NULL,NULL,NULL,'present'),
+  (683,11011,NULL,NULL,NULL,'present'),
+  (683,11012,NULL,NULL,NULL,'present'),
+  (683,11013,NULL,NULL,NULL,'present'),
+  (683,11014,NULL,NULL,NULL,'present'),
+  (683,11015,NULL,NULL,NULL,'present'),
+  (683,11016,NULL,NULL,NULL,'present'),
+  (683,11017,NULL,NULL,NULL,'present'),
+  (683,11018,NULL,NULL,NULL,'present'),
+  (683,11019,NULL,NULL,NULL,'present'),
+  (682,11021,NULL,NULL,NULL,'present'),
+  (682,11022,NULL,NULL,NULL,'present'),
+  (682,11023,NULL,NULL,NULL,'present'),
+  (682,11024,NULL,NULL,NULL,'present'),
+  (686,11000,NULL,NULL,NULL,'present'),
+  (686,11002,NULL,NULL,NULL,'present'),
+  (686,11004,NULL,NULL,NULL,'present'),
+  (686,11005,NULL,NULL,NULL,'present'),
+  (686,11006,NULL,NULL,NULL,'present'),
+  (687,11000,NULL,NULL,NULL,'present'),
+  (687,11002,NULL,NULL,NULL,'present'),
+  (687,11004,NULL,NULL,NULL,'present'),
+  (687,11005,NULL,NULL,NULL,'present'),
+  (687,11006,NULL,NULL,NULL,'present'),
+  (687,11007,NULL,NULL,NULL,'present'),
+  (687,11008,NULL,NULL,NULL,'present'),
+  (687,11009,NULL,NULL,NULL,'present'),
+  (687,11003,NULL,NULL,NULL,'present'),
+  (687,11010,NULL,NULL,NULL,'present'),
+  (688,11017,NULL,NULL,NULL,'present'),
+  (688,11018,NULL,NULL,NULL,'present'),
+  (688,11019,NULL,NULL,NULL,'present'),
+  (688,11020,NULL,NULL,NULL,'present'),
+  (688,11021,NULL,NULL,NULL,'present'),
+  (688,11022,NULL,NULL,NULL,'present'),
+  (688,11023,NULL,NULL,NULL,'present'),
+  (688,11024,NULL,NULL,NULL,'present'),
+  (688,11025,NULL,NULL,NULL,'present'),
+  (688,11026,NULL,NULL,NULL,'present'),
+  (688,11027,NULL,NULL,NULL,'present'),
+  (688,11028,NULL,NULL,NULL,'present'),
+  (688,11029,NULL,NULL,NULL,'present'),
+  (688,11030,NULL,NULL,NULL,'present'),
+  (688,11001,NULL,NULL,NULL,'present'),
+  (689,11012,NULL,NULL,NULL,'present'),
+  (689,11013,NULL,NULL,NULL,'present'),
+  (689,11014,NULL,NULL,NULL,'present'),
+  (689,11015,NULL,NULL,NULL,'present'),
+  (689,11016,NULL,NULL,NULL,'present'),
+  (689,11017,NULL,NULL,NULL,'present'),
+  (689,11018,NULL,NULL,NULL,'present'),
+  (689,11019,NULL,NULL,NULL,'present'),
+  (690,11021,NULL,NULL,NULL,'present'),
+  (690,11022,NULL,NULL,NULL,'present'),
+  (690,11023,NULL,NULL,NULL,'present'),
+  (690,11024,NULL,NULL,NULL,'present'),
+  (690,11025,NULL,NULL,NULL,'present'),
+  (690,11026,NULL,NULL,NULL,'present'),
+  (690,11027,NULL,NULL,NULL,'present'),
+  (690,11028,NULL,NULL,NULL,'present'),
+  (696,11021,NULL,NULL,NULL,'present'),
+  (696,11022,NULL,NULL,NULL,'present'),
+  (696,11023,NULL,NULL,NULL,'present'),
+  (696,11024,NULL,NULL,NULL,'present'),
+  (696,11025,NULL,NULL,NULL,'present'),
+  (697,11026,NULL,NULL,NULL,'present'),
+  (697,11027,NULL,NULL,NULL,'present'),
+  (697,11028,NULL,NULL,NULL,'present'),
+  (697,11029,NULL,NULL,NULL,'present'),
+  (697,11030,NULL,NULL,NULL,'present'),
+  (697,11002,NULL,NULL,NULL,'present'),
+  (697,11003,NULL,NULL,NULL,'present'),
+  (697,11004,NULL,NULL,NULL,'present'),
+  (697,11005,NULL,NULL,NULL,'present'),
+  (697,11006,NULL,NULL,NULL,'present'),
+  (698,11007,NULL,NULL,NULL,'present'),
+  (698,11008,NULL,NULL,NULL,'present'),
+  (698,11009,NULL,NULL,NULL,'present'),
+  (698,11010,NULL,NULL,NULL,'present'),
+  (698,11011,NULL,NULL,NULL,'present'),
+  (698,11012,NULL,NULL,NULL,'present'),
+  (698,11013,NULL,NULL,NULL,'present'),
+  (698,11014,NULL,NULL,NULL,'present'),
+  (698,11015,NULL,NULL,NULL,'present'),
+  (698,11016,NULL,NULL,NULL,'present'),
+  (698,11017,NULL,NULL,NULL,'present'),
+  (699,11011,NULL,NULL,NULL,'present'),
+  (699,11012,NULL,NULL,NULL,'present'),
+  (699,11013,NULL,NULL,NULL,'present'),
+  (699,11014,NULL,NULL,NULL,'present'),
+  (699,11015,NULL,NULL,NULL,'present'),
+  (699,11016,NULL,NULL,NULL,'present'),
+  (699,11017,NULL,NULL,NULL,'present'),
+  (699,11018,NULL,NULL,NULL,'present'),
+  (699,11019,NULL,NULL,NULL,'present'),
+  (700,11021,NULL,NULL,NULL,'present'),
+  (700,11022,NULL,NULL,NULL,'present'),
+  (700,11023,NULL,NULL,NULL,'present'),
+  (700,11024,NULL,NULL,NULL,'present'),
+  (700,11025,NULL,NULL,NULL,'present'),
+  (705,11000,DATE '2021-03-28','booked',NULL,NULL),
+  (707,11000,DATE '2021-03-28','booked',NULL,NULL);
+
+
+
+--
+-- Name: attendance; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE attendance (
+    user_id int NOT NULL,
+    gym_attendance_date timestamp,
+    attendance_status varchar(20),
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id)
+);
+
+--
+-- Data for Name: attendance; Type: TABLE DATA; Schema: public; Owner: -
+--
+INSERT INTO attendance (user_id,gym_attendance_date,attendance_status) 
+VALUES
+  (11001,TIMESTAMP '2021-03-16 16:40:30.000000','present'),
+  (11001,TIMESTAMP '2021-03-12 16:40:30.000000','present'),
+  (11001,TIMESTAMP '2020-03-25 14:52:00.000000','present'),
+  (11000,TIMESTAMP '2021-01-04 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-01-04 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-01-04 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-01-04 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-01-04 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-01-04 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-01-04 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-01-04 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11002,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11004,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11005,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11006,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11007,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11008,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11009,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11003,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11010,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11011,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11012,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11013,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11014,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11015,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11016,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11017,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11018,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11019,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11020,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-05 16:30:00.000000','present'),
+  (11017,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11018,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11019,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11020,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11027,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11028,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11029,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11030,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11001,TIMESTAMP '2021-01-06 17:45:00.000000','present'),
+  (11011,TIMESTAMP '2021-01-07 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-01-07 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-01-07 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-01-07 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-01-07 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11001,TIMESTAMP '2021-01-08 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-01-11 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-01-11 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-01-11 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-01-11 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-01-11 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-01-11 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-01-11 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-01-11 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11003,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11010,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11020,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-01-12 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11020,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11001,TIMESTAMP '2021-01-13 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-01-14 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-01-14 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-01-14 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-01-14 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-15 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-15 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-15 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-15 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-15 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-15 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-01-15 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-01-15 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-01-18 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-01-18 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-01-18 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-01-18 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-01-18 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11003,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11010,TIMESTAMP '2021-01-19 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11020,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11001,TIMESTAMP '2021-01-20 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-01-21 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-22 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-22 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-22 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-22 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-22 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-22 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-01-25 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-01-25 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-01-25 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-01-25 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-01-25 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11003,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11010,TIMESTAMP '2021-01-26 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11020,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11001,TIMESTAMP '2021-01-27 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-01-28 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-01-29 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-01-29 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-01-29 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-01-29 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-01-29 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-01-29 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-02-05 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-02-05 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-02-05 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-02-05 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-02-05 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11003,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11010,TIMESTAMP '2021-02-02 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11020,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11001,TIMESTAMP '2021-02-04 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-02-03 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-02-01 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-02-01 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-02-01 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-02-01 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-02-12 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-02-12 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-02-12 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-02-12 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-02-12 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11003,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11010,TIMESTAMP '2021-02-08 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11020,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11001,TIMESTAMP '2021-02-11 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-02-10 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-02-09 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-02-09 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-02-09 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-02-09 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-02-15 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-02-15 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-02-15 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-02-15 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-02-15 00:00:00.000000','present'),
+  (11000,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11003,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11010,TIMESTAMP '2021-02-16 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11020,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11001,TIMESTAMP '2021-02-17 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-02-18 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-02-19 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-02-19 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-02-19 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-02-19 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-02-19 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-02-19 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-02-19 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-02-19 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-03-01 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-03-01 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-03-01 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-03-01 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-03-01 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11003,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-03-02 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11010,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-03-03 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-03-04 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-03-05 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-03-05 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-03-05 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-03-05 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-03-05 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-03-05 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-03-05 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-03-05 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-02-22 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-02-22 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-02-22 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-02-22 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-02-22 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11029,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11030,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11002,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11003,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11004,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11005,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11006,TIMESTAMP '2021-02-23 00:00:00.000000','present'),
+  (11007,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11008,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11009,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11010,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-02-24 00:00:00.000000','present'),
+  (11011,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11012,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11013,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11014,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11015,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11016,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11017,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11018,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11019,TIMESTAMP '2021-02-25 00:00:00.000000','present'),
+  (11021,TIMESTAMP '2021-02-26 00:00:00.000000','present'),
+  (11022,TIMESTAMP '2021-02-26 00:00:00.000000','present'),
+  (11023,TIMESTAMP '2021-02-26 00:00:00.000000','present'),
+  (11024,TIMESTAMP '2021-02-26 00:00:00.000000','present'),
+  (11025,TIMESTAMP '2021-02-26 00:00:00.000000','present'),
+  (11026,TIMESTAMP '2021-02-26 00:00:00.000000','present'),
+  (11027,TIMESTAMP '2021-02-26 00:00:00.000000','present'),
+  (11028,TIMESTAMP '2021-02-26 00:00:00.000000','present');
+
+
+--
+-- Name: manager; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE manager (
+    user_id int NOT NULL,
+    first_name varchar(30) NOT NULL,
+    last_name varchar(30),
+    email_address varchar(60),
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id)
+);
+
+--
+-- Data for Name: manager; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO manager VALUES ('10000', 'Cam', 'Gray', 'Gra.Cam@gmail.com');
+
+--
+-- Name: communication; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE communication (
+    communication_id SERIAL PRIMARY KEY,
+    sent timestamp,
+    user_id int,
+    sender varchar(60),
+    subject varchar(150),
+    message text,
+    FOREIGN KEY (user_id) REFERENCES authorisation(user_id)
+);
+
+INSERT INTO communication (communication_id,sent,user_id,sender,subject,message) 
+VALUES
+  ('7000',TIMESTAMP '2021-03-28 16:39:15.680087',NULL,'esangkop@gmail.com','Test','Test 
+Hi Members'),
+  ('7001',TIMESTAMP '2021-03-31 22:09:34.361825',NULL,'esangkop@gmail.com','test 2','test email 2'),
+  ('7002',TIMESTAMP '2021-03-31 22:14:22.949126',NULL,'esangkop@gmail.com','test 3','test 3'),
+  ('7003',TIMESTAMP '2021-04-01 07:28:44.974646',NULL,'esangkop@gmail.com','test 3','test 3');
+
+
+---
+--- DROP Views
+---
+DROP VIEW IF EXISTS booked_group CASCADE;
+DROP VIEW IF EXISTS booked_pt CASCADE;
+DROP VIEW IF EXISTS class_display CASCADE;
+DROP VIEW IF EXISTS group_attendance CASCADE;
+DROP VIEW IF EXISTS group_class_attendance CASCADE;
+DROP VIEW IF EXISTS group_class_booking_count CASCADE;
+DROP VIEW IF EXISTS group_class_view CASCADE;
+DROP VIEW IF EXISTS group_classes_view CASCADE;
+DROP VIEW IF EXISTS listmember CASCADE;
+DROP VIEW IF EXISTS listtrainer CASCADE;
+DROP VIEW IF EXISTS login CASCADE;
+DROP VIEW IF EXISTS membership_payments CASCADE;
+DROP VIEW IF EXISTS membershiplist CASCADE;
+DROP VIEW IF EXISTS pt_attendance CASCADE;
+DROP VIEW IF EXISTS pt_class_display CASCADE;
+DROP VIEW IF EXISTS pt_payments CASCADE;
+DROP VIEW IF EXISTS total_payments CASCADE;
+
+---
+--- Create Views
+---
+
+CREATE VIEW booked_group AS 
+ SELECT group_booking.group_booking_id,
+    group_booking.group_class_id,
+    group_booking.user_id,
+    group_booking.booking_date,
+    group_booking.booking_status,
+    group_booking.cancel_date,
+    group_booking.attendance_status,
+    group_class.group_class_name,
+    group_class.group_class_date,
+    group_class.group_class_day,
+    group_class.group_class_start_time,
+    group_class.group_class_end_time,
+    group_class.location,
+    trainer.first_name,
+    trainer.last_name,
+    trainer.user_id AS trainer_id
+   FROM group_booking
+     JOIN group_class ON group_booking.group_class_id = group_class.group_class_id
+     JOIN trainer ON group_class.user_id = trainer.user_id;
+
+CREATE VIEW booked_pt AS 
+ SELECT pt_booking.pt_booking_id,
+    pt_booking.pt_class_id,
+    pt_booking.user_id,
+    pt_booking.booking_date,
+    pt_booking.booking_status,
+    pt_booking.cancel_date,
+    pt_booking.attendance_status,
+    pt_class.pt_class_date,
+    pt_class.pt_class_time,
+    trainer.first_name,
+    trainer.last_name,
+    trainer.user_id AS trainerid,
+    pt_class.pt_class_cost,
+    pt_class.pt_class_day
+   FROM pt_booking
+     JOIN pt_class ON pt_booking.pt_class_id = pt_class.pt_class_id
+     JOIN trainer ON pt_class.user_id = trainer.user_id;
+
+CREATE VIEW class_display AS 
+ SELECT group_class.group_class_id,
+    group_class.group_class_name,
+    group_class.description,
+    group_class.maximum_number,
+    group_class.location,
+    group_class.group_class_date,
+    group_class.group_class_day,
+    group_class.group_class_start_time,
+    group_class.group_class_end_time,
+    trainer.user_id AS trainer_id,
+    trainer.first_name AS trainer_name,
+    trainer.email_address AS trainer_email,
+    trainer.gender
+   FROM trainer
+     RIGHT JOIN group_class ON group_class.user_id = trainer.user_id;
+
+CREATE VIEW group_attendance AS 
+ SELECT booked_group.group_booking_id,
+    booked_group.group_class_id,
+    booked_group.user_id,
+    booked_group.booking_date,
+    booked_group.booking_status,
+    booked_group.cancel_date,
+    booked_group.attendance_status,
+    booked_group.group_class_name,
+    booked_group.group_class_date,
+    booked_group.group_class_day,
+    booked_group.group_class_start_time,
+    booked_group.group_class_end_time,
+    booked_group.location,
+    booked_group.first_name,
+    booked_group.last_name,
+    booked_group.trainer_id,
+    date_part('year'::text, to_date(booked_group.group_class_date::text, 'yyyy-mm-dd'::text)) AS class_year,
+    date_part('month'::text, to_date(booked_group.group_class_date::text, 'yyyy-mm-dd'::text)) AS class_month
+   FROM booked_group
+  WHERE booked_group.attendance_status::text = 'present'::text
+  ORDER BY booked_group.group_class_date;
+
+CREATE VIEW group_class_attendance AS 
+ SELECT group_class.group_class_id,
+    group_class.group_class_name,
+    group_class.group_class_date,
+    date_part('month'::text, to_date(group_class.group_class_date::text, 'yyyy-mm-dd'::text)) AS class_month,
+    to_char(to_date(group_class.group_class_date::text, 'yyyy-mm-dd'::text)::timestamp with time zone, 'Mon'::text) AS class_month_name,
+    date_part('year'::text, to_date(group_class.group_class_date::text, 'yyyy-mm-dd'::text)) AS class_year,
+    count(group_booking.group_class_id) AS count
+   FROM group_class
+     LEFT JOIN group_booking ON group_booking.group_class_id = group_class.group_class_id
+  WHERE group_booking.attendance_status::text = 'present'::text
+  GROUP BY group_class.group_class_id;
+
+CREATE VIEW group_class_booking_count AS 
+ SELECT group_class.group_class_id,
+    count(group_booking.group_class_id) AS count
+   FROM group_class
+     LEFT JOIN group_booking ON group_booking.group_class_id = group_class.group_class_id AND group_booking.cancel_date IS NULL
+  GROUP BY group_class.group_class_id;
+
+CREATE VIEW group_class_view AS 
+ SELECT group_class.group_class_name,
+    date_part('month'::text, to_date(group_class.group_class_date::text, 'yyyy-mm-dd'::text)) AS class_month,
+    date_part('year'::text, to_date(group_class.group_class_date::text, 'yyyy-mm-dd'::text)) AS class_year,
+    count(group_booking.group_class_id) AS count
+   FROM group_class
+     JOIN group_booking ON group_booking.group_class_id = group_class.group_class_id
+  WHERE group_booking.attendance_status::text = 'present'::text
+  GROUP BY group_class.group_class_name, (date_part('month'::text, to_date(group_class.group_class_date::text, 'yyyy-mm-dd'::text))), (date_part('year'::text, to_date(group_class.group_class_date::text, 'yyyy-mm-dd'::text)));
+
+CREATE VIEW group_classes_view AS
+ SELECT group_class.group_class_id,
+    group_class.group_class_day,
+    to_date(group_class.group_class_date::text, 'YYYY-MM-DD'::text) AS to_date,
+    group_class.group_class_start_time,
+    group_class.group_class_end_time,
+    group_class.group_class_name,
+    group_class.location,
+    trainer.first_name AS trainer,
+    trainer.last_name,
+    group_class.maximum_number - (( SELECT group_class_booking_count.count
+           FROM group_class_booking_count
+          WHERE group_class_booking_count.group_class_id = group_class.group_class_id))
+   FROM group_class
+     JOIN trainer ON trainer.user_id = group_class.user_id;
+
+CREATE VIEW listmember AS 
+ SELECT member.user_id,
+    member.first_name,
+    member.last_name,
+    member.phone_number,
+    member.email_address,
+    member.address,
+    member.date_of_birth,
+    member.gender,
+    member.goals,
+    member.medical_notes,
+    member.photo_url,
+    membership.membership_type,
+    authorisation.user_type,
+    authorisation.password
+   FROM member
+     JOIN authorisation ON authorisation.user_id = member.user_id
+     JOIN membership ON membership.user_id = member.user_id;
+
+CREATE VIEW login AS 
+ SELECT authorisation.user_id,
+    authorisation.password,
+    authorisation.user_type,
+    member.email_address AS member_email,
+    trainer.email_address AS trainer_email,
+    manager.email_address AS manager_email
+   FROM authorisation
+     LEFT JOIN member ON authorisation.user_id = member.user_id
+     LEFT JOIN trainer ON authorisation.user_id = trainer.user_id
+     LEFT JOIN manager ON authorisation.user_id = manager.user_id;
+
+CREATE VIEW membership_payments AS 
+ SELECT membership_payment.membership_payment_id,
+    membership_payment.user_id,
+    membership_payment.payment_date,
+    membership_payment.quantity,
+    membership_payment.paid_amount,
+    date_part('month'::text, membership_payment.payment_date) AS payment_month_number,
+    to_char(membership_payment.payment_date, 'Mon'::text) AS payment_month_name,
+    date_part('year'::text, membership_payment.payment_date) AS payment_year
+   FROM membership_payment;
+
+CREATE  VIEW membershiplist AS 
+ SELECT membership.membership_type,
+    membership.join_date,
+    membership.left_date,
+    membership.membership_status,
+    membership.membership_dueday,
+    member.user_id,
+    member.first_name
+   FROM member
+     LEFT JOIN membership ON member.user_id = membership.user_id;
+
+CREATE VIEW pt_attendance AS 
+ SELECT booked_pt.pt_booking_id,
+    booked_pt.pt_class_id,
+    booked_pt.user_id,
+    booked_pt.booking_date,
+    booked_pt.booking_status,
+    booked_pt.cancel_date,
+    booked_pt.attendance_status,
+    booked_pt.pt_class_date,
+    booked_pt.pt_class_time,
+    booked_pt.first_name,
+    booked_pt.last_name,
+    booked_pt.trainerid,
+    booked_pt.pt_class_cost,
+    booked_pt.pt_class_day,
+    date_part('year'::text, booked_pt.pt_class_date) AS class_year,
+    date_part('month'::text, booked_pt.pt_class_date) AS class_month
+   FROM booked_pt
+  WHERE booked_pt.attendance_status::text = 'present'::text
+  ORDER BY booked_pt.pt_class_date;
+
+CREATE VIEW pt_class_display AS 
+ SELECT pt_class.pt_class_id,
+    pt_class.pt_class_date,
+    pt_class.pt_class_time,
+    pt_class.pt_class_cost,
+    trainer.user_id,
+    trainer.first_name AS trainer_name,
+    trainer.gender,
+    trainer.email_address AS trainer_email
+   FROM trainer
+     FULL JOIN pt_class ON pt_class.user_id = trainer.user_id;
+
+CREATE VIEW pt_payments AS 
+ SELECT pt_payment.pt_payment_id,
+    pt_payment.pt_booking_id,
+    pt_payment.payment_date,
+    pt_payment.paid_amount,
+    date_part('month'::text, pt_payment.payment_date) AS payment_month_number,
+    to_char(pt_payment.payment_date, 'Mon'::text) AS payment_month_name,
+    date_part('year'::text, pt_payment.payment_date) AS payment_year
+   FROM pt_payment;
+
+CREATE VIEW total_payments AS 
+ SELECT pt_payment.payment_date,
+    pt_payment.paid_amount,
+    date_part('month'::text, pt_payment.payment_date) AS payment_month_number,
+    to_char(pt_payment.payment_date, 'Mon'::text) AS payment_month_name,
+    date_part('year'::text, pt_payment.payment_date) AS payment_year
+   FROM pt_payment
+UNION ALL
+ SELECT membership_payment.payment_date,
+    membership_payment.paid_amount,
+    date_part('month'::text, membership_payment.payment_date) AS payment_month_number,
+    to_char(membership_payment.payment_date, 'Mon'::text) AS payment_month_name,
+    date_part('year'::text, membership_payment.payment_date) AS payment_year
+   FROM membership_payment;
+
+
+--
+-- Create Sequences
+--
+DROP SEQUENCE IF EXISTS mem_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS trainer_id_seq CASCADE;
+
+
+
+CREATE SEQUENCE mem_id_seq
+    INCREMENT BY 1
+    OWNED BY authorisation.user_id
+;
+
+
+CREATE SEQUENCE trainer_id_seq
+       INCREMENT BY 1
+OWNED BY authorisation.user_id
+;
+
+
+SELECT SETVAL ('mem_id_seq', (SELECT MAX(user_id) FROM authorisation WHERE user_type = 'member'));
+SELECT SETVAL ('trainer_id_seq', (SELECT MAX(user_id) FROM authorisation WHERE user_type = 'trainer'));
+SELECT SETVAL ('pt_booking_pt_booking_id_seq', (SELECT MAX(pt_booking_id) FROM pt_booking));
+SELECT SETVAL ('pt_class_pt_class_id_seq', (SELECT MAX(pt_class_id) FROM pt_class));
+SELECT SETVAL ('group_booking_group_booking_id_seq', (SELECT MAX(group_booking_id) FROM group_booking));
+SELECT SETVAL ('group_class_group_class_id_seq', (SELECT MAX(group_class_id) FROM group_class));
+SELECT SETVAL ('communication_communication_id_seq', (SELECT MAX(communication_id) FROM communication));
+SELECT SETVAL ('membership_payment_membership_payment_id_seq', (SELECT MAX(membership_payment_id) FROM membership_payment));
+SELECT SETVAL ('pt_payment_pt_payment_id_seq', (SELECT MAX(pt_payment_id) FROM pt_payment));

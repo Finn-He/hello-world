@@ -1,0 +1,74 @@
+def getCursor():    
+    global dbconn    
+    if dbconn == None:
+        conn = psycopg2.connect(dbname=connect.dbname, user=connect.dbuser, 
+        password=connect.dbpass, host=connect.dbhost, port=connect.dbport)
+        dbconn = conn.cursor()  
+        #conn.autocommit = True
+
+        return dbconn
+    else:
+        return dbconn
+
+
+
+# dbuser = "postgres"
+# dbpass = "comp639!" #"PUT YOUR PASSWORD HERE"
+# dbhost = "comp639.cldqh6d4e9ir.us-east-1.rds.amazonaws.com" #"PUT YOUR AWS Connect String here"
+# dbport = "5432"
+# dbname = "comp639"
+
+
+
+@app.route("/", methods=['GET', 'POST'])     #log in part for manager, trainer, member enter their own interface.
+def login():
+    if request.method == 'POST':
+        useremail = request.form.get('useremail')
+        password = request.form.get('password')
+        test(useremail,'ddddddddddddddddddddddddddddddddddddddd')
+        test(password,'ddddddddddddddddddddddddddddddddddddddd')
+        cursor = getCursor()
+        cursor.execute('SELECT * FROM login WHERE member_email = %s AND password \
+            = %s;', (useremail, password, ))
+        member = cursor.fetchone()
+        cursor.execute('SELECT * FROM login WHERE trainer_email = %s AND password \
+            = %s;', (useremail, password, ))
+        trainer = cursor.fetchone()
+        cursor.execute('SELECT * FROM login WHERE manager_email = %s AND password \
+            = %s;', (useremail, password, ))
+        manager = cursor.fetchone()
+        account = False
+        if member:
+            account = member
+        elif trainer:
+            account = trainer
+        elif manager:
+            account = manager
+        if account:
+            session['loggedin'] = True
+            session['usertype'] = account[2]
+            session['date'] = str(dt.datetime.today())
+            session['userid'] = account[0]
+            if account[3]:
+                sql = "SELECT first_name, last_name FROM member WHERE user_id = %s;" % account[0]
+                cursor.execute(sql)
+                name = cursor.fetchone()
+                session['name'] = name
+                return redirect(url_for('member'))
+            elif account[4]:
+                sql = "SELECT first_name, last_name FROM trainer WHERE user_id = %s;" % account[0]
+                cursor.execute(sql)
+                name = cursor.fetchone()
+                session['name'] = name
+                return redirect(url_for('trainer'))
+            elif account[5]:
+                sql = "SELECT first_name, last_name FROM manager WHERE user_id = %s;" % account[0]
+                cursor.execute(sql)
+                name = cursor.fetchone()
+                session['name'] = name
+                return redirect(url_for('manager'))
+        else:
+            flash('Invalid username or password. Please try again!')
+            return redirect(url_for('login'))
+    return render_template( 'login.html')
+
